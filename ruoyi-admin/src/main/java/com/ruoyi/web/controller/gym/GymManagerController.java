@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/gym/manager")
@@ -25,8 +27,17 @@ public class GymManagerController extends BaseController {
 
 
     @GetMapping("/list")
+    @ResponseBody
     public AjaxResult list() {
-        List<GymManager> list = gymManagerService.selectGymManagerList();
+        // spring-boot-starter-web  spring boot
+        List<GymManager> list = new ArrayList<>();
+
+        GymManager gymManager = new GymManager();
+        gymManager.setId(1L);
+        gymManager.setName("哑铃");
+        gymManager.setStatus("open");
+        list.add(gymManager);  // gymManagerService.selectGymManagerList();
+
         return AjaxResult.success(list);
     }
 
