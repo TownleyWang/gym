@@ -1,111 +1,47 @@
-# 软件需求说明书：健身中心预约系统 
+<p align="center">
+	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-dd77653d7c9f197dd9d93684f3c8dcfbab6.png">
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v4.8.1</h1>
+<h4 align="center">基于SpringBoot开发的轻量级Java快速开发框架</h4>
+<p align="center">
+	<a href="https://gitee.com/y_project/RuoYi/stargazers"><img src="https://gitee.com/y_project/RuoYi/badge/star.svg?theme=gvp"></a>
+	<a href="https://gitee.com/y_project/RuoYi"><img src="https://img.shields.io/badge/RuoYi-v4.8.1-brightgreen.svg"></a>
+	<a href="https://gitee.com/y_project/RuoYi/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
+</p>
 
-## 1. 引言
-### 1.1 目的  
-为健身中心会员及管理员提供线上课程/场地预约服务，提升资源利用率与用户体验。  
-### 1.2 范围  
-- 会员：查看课程/场地、预约、取消预约、查看个人预约记录  
-- 管理员：管理课程/场地资源、监控预约状态
+## 平台简介
 
----
+一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适的。于是利用空闲休息时间开始自己写了一套后台系统。如此有了若依。她可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。
 
-## 2. 用户角色  
-| 角色       | 权限描述                     |  
-|------------|-----------------------------|  
-| 会员       | 预约/取消本人预约、查看资源 |  
-| 管理员     | 管理所有资源及预约规则      |  
+性别男，若依是给女儿取的名字（寓意：你若不离不弃，我必生死相依）
 
----
+若依是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
 
-## 3. 功能性需求  
-### 3.1 核心功能流程  
-```mermaid
-graph TD
-  A[用户登录] --> B[浏览课程/场地列表]
-  B --> C{选择资源}
-  C --> D[查看可预约时段]
-  D --> E[确认预约]
-  E --> F[生成预约凭证]
-```
+* 前端基于 [Hplus(H+)](https://gitee.com/hplus_admin/hplus) 后台主题 UI 框架。
+* 前后端分离版本，请移步[RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue)，微服务版本，请移步[RuoYi-Cloud](https://gitee.com/y_project/RuoYi-Cloud)
+* 阿里云折扣场：[点我进入](http://aly.ruoyi.vip)，腾讯云秒杀场：[点我进入](http://txy.ruoyi.vip)&nbsp;&nbsp;
 
----
+## 内置功能
 
-### 3.2 详细需求说明  
-| 功能模块       | 需求描述                                                     |  
-|----------------|-------------------------------------------------------------|  
-| **资源展示**   | 按日期/类型筛选课程（瑜伽/器械）、场地（篮球场/泳道）       |  
-| **预约操作**   | 选择时段→确认→生成唯一预约码（冲突时段拒绝）           |  
+1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
+2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
+3.  岗位管理：配置系统用户所属担任职务。
+4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
+5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
+6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
+7.  参数管理：对系统动态配置常用参数。
+8.  通知公告：系统通知公告信息发布维护。
+9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+10. 登录日志：系统登录日志记录查询包含登录异常。
+11. 在线用户：当前系统中活跃用户状态监控。
+12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
+13. 代码生成：前后端代码的生成（java、html、xml、sql）支持CRUD下载 。
+14. 系统接口：根据业务代码自动生成相关的api接口文档。
+15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
+16. 缓存监控：对系统的缓存查询，删除、清空等操作。
+17. 在线构建器：拖动表单元素生成相应的HTML代码。
+18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 
-#### **资源展示模块**  
-| 要素 | 详细规则 |  
-|------|----------|  
-| **数据维度** | 可筛选：课程类型（瑜伽/搏击/器械指导）、场地类型（泳池/篮球场/私教区）、教练姓名、时段（早/午/晚） |  
-| **状态标识** | <ul><li>可预约：绿色标签 + 剩余名额数</li><li>即将满员（剩余≤20%）：黄色标签</li><li>已满员：红色标签 + 候补入口</li><li>维修中：灰色标签 + 停用说明</li><li>实时看板：各场地利用率曲线、课程满员率TOP10</li></ul> |  
-| **排序逻辑** | 默认按时间升序，支持按热度（预约率）、评分（教练）手动排序 |  
+## 在线体验
 
-#### **预约模块**  
-
-| 步骤 | 系统行为 |  
-|------|----------|  
-| **时段选择** | <ul><li>时间颗粒度：30分钟（如 14:00-14:30）</li><li>冲突检测：自动屏蔽与已有预约重叠时段</li><li>容量检测：实时显示剩余名额（每5秒刷新）</li></ul> |  
-| **确认提交** | <ul><li>二次弹窗提示：包含课程/场地名称、时段、教练</li><li>强制阅读《安全政策》（首次预约需勾选确认）</li></ul> |  
-| **凭证生成** | <ul><li>唯一预约码：8位数字字母混合（如 A3B9-X2K8）</li><li>动态二维码：含用户ID+预约时段+场地编码</li><li>自动推送：站内消息+短信（含导航链接）</li></ul> |  
-| **取消预约** | <ul><li>开课前≥1小时，用户可点击取消</li></ul> |  
-
----
-
-## 5. 数据需求  
-### 5.1 核心业务实体关系
-```mermaid
-erDiagram
-  MEMBER ||--o{ BOOKING : "进行预约"
-  RESOURCE ||--o{ BOOKING : "被预约"
-  TIME_SLOT ||--o{ BOOKING : "被预约"
-  
-  MEMBER {
-    string member_id PK "会员ID"
-    string name "姓名"
-    string phone "手机号"
-    string membership_level "会员等级"
-    datetime registration_date "注册日期"
-  }
-  
-  RESOURCE {
-    string resource_id PK "资源ID"
-    string resource_name "资源名称"
-    string resource_type "资源类型(泳池/篮球场/私教区)"
-    int max_capacity "最大容量"
-    string status "状态(可用/维修/停用)"
-    string location "位置描述"
-  }
-  
-  TIME_SLOT {
-    string slot_id PK "时段ID"
-    datetime start_time "开始时间"
-    datetime end_time "结束时间"
-    string day_of_week "星期几"
-    string period "时段(早/午/晚)"
-  }
-  
-  BOOKING {
-    string booking_id PK "预约ID"
-    string member_id FK "会员ID"
-    string resource_id FK "资源ID"
-    string slot_id FK "时段ID"
-    datetime booking_date "预约日期"
-    string booking_code "预约码"
-    string status "状态(已确认/已取消/已完成)"
-    datetime created_at "创建时间"
-    datetime cancelled_at "取消时间"
-  }
-```
-
----
-
-## 6. 特殊说明
-| 场景                     | 预期结果                     |  
-|--------------------------|------------------------------|  
-| 会员重复预约          | 弹出提示："您已有XX时段的XX预约" ，系统自动关闭当前页面并跳转至冲突预约详情页 | 
-| 课程已满员            | 弹出提示“已满员”        |  
-| 开课前1小时           | 点击“取消”时，系统拒绝并提示违约政策 |   
-
+- admin/admin123  
