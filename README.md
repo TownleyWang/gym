@@ -55,27 +55,48 @@ graph TD
 ---
 
 ## 5. 数据需求  
-### 5.1 核心数据实体
+### 5.1 核心业务实体关系
 ```mermaid
 erDiagram
-  USER ||--o{ RESERVATION : has
-  COURSE ||--o{ RESERVATION : includes
-  LOCATION ||--o{ TIME_SLOT : provides
+  MEMBER ||--o{ BOOKING : "进行预约"
+  RESOURCE ||--o{ BOOKING : "被预约"
+  TIME_SLOT ||--o{ BOOKING : "被预约"
   
-  USER {
-    string user_id PK
-    string name
-    string phone
+  MEMBER {
+    string member_id PK "会员ID"
+    string name "姓名"
+    string phone "手机号"
+    string membership_level "会员等级"
+    datetime registration_date "注册日期"
   }
-  RESERVATION {
-    string order_id PK
-    timestamp create_time
-    string status
+  
+  RESOURCE {
+    string resource_id PK "资源ID"
+    string resource_name "资源名称"
+    string resource_type "资源类型(泳池/篮球场/私教区)"
+    int max_capacity "最大容量"
+    string status "状态(可用/维修/停用)"
+    string location "位置描述"
   }
-  COURSE {
-    string course_id PK
-    string coach
-    int max_capacity
+  
+  TIME_SLOT {
+    string slot_id PK "时段ID"
+    datetime start_time "开始时间"
+    datetime end_time "结束时间"
+    string day_of_week "星期几"
+    string period "时段(早/午/晚)"
+  }
+  
+  BOOKING {
+    string booking_id PK "预约ID"
+    string member_id FK "会员ID"
+    string resource_id FK "资源ID"
+    string slot_id FK "时段ID"
+    datetime booking_date "预约日期"
+    string booking_code "预约码"
+    string status "状态(已确认/已取消/已完成)"
+    datetime created_at "创建时间"
+    datetime cancelled_at "取消时间"
   }
 ```
 
