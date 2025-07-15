@@ -20,6 +20,35 @@
         price,
         duration
         FROM gym_resource
+        WHERE status = 'ACTIVE'
+    </select>
+    <!-- ✅ 根据 ID 查询资源 left join-->
+    <!-- java ==>mybatis ==>jdbc => db -->
+    <!-- java =sql=>jdbc => db(mysql,oracle) -->
+    <select id="selectGymResourceById" parameterType="Long" resultType="com.ruoyi.system.domain.GymResource">
+        SELECT
+        resource_id        AS resourceId,
+        resource_name      AS resourceName,
+        resource_type      AS resourceType,
+        category,
+        description,
+        max_capacity       AS maxCapacity,
+        current_capacity   AS currentCapacity,
+        location_address   AS locationAddress,
+        status,
+        price,
+        duration,
+        update_by,
+        update_time
+        FROM gym_resource
+        WHERE resource_id = #{id}
     </select>
 
+    <!-- ✅ 更新 updateBy 和 updateTime -->
+    <update id="updateGymResource" parameterType="com.ruoyi.system.domain.GymResource">
+        UPDATE gym_resource
+        SET update_by = #{updateBy},
+        update_time = #{updateTime}
+        WHERE resource_id = #{resourceId}
+    </update>
 </mapper>

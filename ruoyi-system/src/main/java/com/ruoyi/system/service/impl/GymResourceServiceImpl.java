@@ -18,4 +18,14 @@ public class GymResourceServiceImpl implements IGymResourceService {
     public List<GymResource> selectResourceList(GymResource resource) {
         return gymResourceMapper.selectResourceList(resource);
     }
+
+    @Override
+    public GymResource selectGymResourceById(Long id) {
+        return gymResourceMapper.selectGymResourceById(id);
+    }
+
+    @Override
+    public int updateGymResource(GymResource resource) {
+        return gymResourceMapper.updateGymResource(resource);
+    }
 }

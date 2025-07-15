@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Date;
+
+import static com.ruoyi.common.utils.LogUtils.getUsername;
 
 @Controller
 @RequestMapping("/gym/resource")
@@ -33,5 +36,18 @@ public class GymResourceController extends BaseController {
     public AjaxResult list(GymResource resource) {
         List<GymResource> list = gymResourceService.selectResourceList(resource);
         return AjaxResult.success(list);
+    }
+
+    @PostMapping("/updateByUser/{id}")
+    @ResponseBody
+    public AjaxResult updateByUser(@PathVariable Long id) {
+        String username = getUsername(); // 获取当前登录用户名（若依内置方法）
+        GymResource resource = gymResourceService.selectGymResourceById(id);
+        if (resource == null) {
+            return AjaxResult.error("资源不存在");
+        }
+        resource.setUpdateBy(username);
+        resource.setUpdateTime(new Date());
+        return toAjax(gymResourceService.updateGymResource(resource));
     }
 }

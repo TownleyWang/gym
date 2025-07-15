@@ -22,7 +22,31 @@
       const container = document.querySelector('.container-div');
       list.forEach(item => {
         const p = document.createElement('p');
-        p.textContent = `健身房名称：${item.resourceName}，状态：${item.status}`;
+        const categoryColor =
+          item.category === '篮球' ? 'blue' :
+          item.category === '足球' ? 'green' : 'black';
+        p.innerHTML = `健身房名称: ${item.resourceName}, 状态: ${item.status}, 类别: <span style="color:${categoryColor}">${item.category}</span>`;
+        // ↓↓↓ 在这里添加按钮 ↓↓↓
+const btn = document.createElement('button');
+btn.textContent = '更新';
+btn.style.marginLeft = '10px';
+btn.className = 'btn btn-primary btn-xs';
+btn.onclick = function () {
+  fetch(`/gym/resource/updateByUser/${item.resourceId}`, {
+    method: 'POST'
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (res.code === 0) {
+        alert("更新成功");
+        location.reload(); // 成功后刷新页面
+      } else {
+        alert("更新失败：" + res.msg);
+      }
+    });
+};
+// ✅ 把按钮插入到 <p> 内部
+p.appendChild(btn);
         container.appendChild(p);
       });
     });

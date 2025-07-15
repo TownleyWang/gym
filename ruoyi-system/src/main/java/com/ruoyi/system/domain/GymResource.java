@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 
 public class GymResource {
     private Long resourceId;
@@ -14,6 +16,8 @@ public class GymResource {
     private String status;
     private BigDecimal price;
     private Integer duration;
+    private String updateBy;
+    private Date updateTime;
 
     // ===== Getter 和 Setter（可用 IDEA 自动生成） =====
 
@@ -103,5 +107,21 @@ public class GymResource {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

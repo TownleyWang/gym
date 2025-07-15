@@ -8,6 +8,7 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ruoyi.common.json.JSON;
+import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
  * 处理并记录日志文件
@@ -118,9 +119,13 @@ public class LogUtils
         return JSON.marshal(params);
     }
 
-    protected static String getUsername()
+    public static String getUsername()
     {
-        return (String) SecurityUtils.getSubject().getPrincipal();
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        if (principal instanceof SysUser) {
+            return ((SysUser) principal).getUserName();
+        }
+        return null;
     }
 
     public static Logger getAccessLog()
