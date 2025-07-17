@@ -23,4 +23,34 @@
         WHERE resource_id = #{resourceId}
     </select>
 
+
+
+<update id="updateCurrentBookings" parameterType="com.ruoyi.system.domain.GymTimeSlot">
+UPDATE gym_time_slot
+SET
+current_bookings = #{currentBookings},
+status = #{status},
+update_by = #{updateBy},
+update_time = NOW()
+WHERE slot_id = #{slotId}
+</update>
+
+<select id="selectSlotById" parameterType="Long" resultType="com.ruoyi.system.domain.GymTimeSlot">
+SELECT
+slot_id AS slotId,
+resource_id AS resourceId,
+start_time AS startTime,
+end_time AS endTime,
+day_of_week AS dayOfWeek,
+max_bookings AS maxBookings,
+current_bookings AS currentBookings,
+status,
+create_by AS createBy,
+create_time AS createTime,
+update_by AS updateBy,
+update_time AS updateTime
+FROM gym_time_slot
+WHERE slot_id = #{slotId}
+</select>
+
 </mapper>

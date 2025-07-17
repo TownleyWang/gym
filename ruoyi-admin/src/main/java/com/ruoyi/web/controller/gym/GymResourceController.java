@@ -68,4 +68,19 @@ public class GymResourceController extends BaseController {
         mmap.put("slotList", slotList);
         return "gym/slot"; // 注意：这是 slot.html 页面路径，默认在 templates/gym 下
     }
+
+    @PostMapping("/slot/book/{id}")
+    @ResponseBody
+    public AjaxResult bookSlot(@PathVariable("id") Long slotId) {
+        int result = gymTimeSlotService.bookSlot(slotId, getUsername());
+        return result > 0 ? AjaxResult.success() : AjaxResult.error("预约失败，可能已满或参数错误");
+    }
+
+    @PostMapping("/slot/cancel/{id}")
+    @ResponseBody
+    public AjaxResult cancelSlot(@PathVariable("id") Long slotId) {
+        int result = gymTimeSlotService.cancelSlot(slotId, getUsername());
+        return result > 0 ? AjaxResult.success() : AjaxResult.error("取消失败，可能未预约或参数错误");
+    }
+
 }
