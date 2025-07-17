@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>资源时间段</title>
+    <th:block th:replace="include :: header('时间段列表')"/>
+</head>
+<body>
+<div class="main-content">
+    <div class="container-fluid">
+        <h2>时间段列表</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>时间段</th>
+                <th>星期</th>
+                <th>最大预约数</th>
+                <th>当前预约数</th>
+                <th>状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="slot : ${slotList}">
+                <td th:text="${slot.startTime + ' - ' + slot.endTime}"></td>
+                <td th:text="'星期' + ${slot.dayOfWeek}"></td>
+                <td th:text="${slot.maxBookings}"></td>
+                <td th:text="${slot.currentBookings}"></td>
+                <td th:text="${slot.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+</body>
+</html>

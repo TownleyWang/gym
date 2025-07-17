@@ -13,6 +13,11 @@ import java.util.Date;
 
 import static com.ruoyi.common.utils.LogUtils.getUsername;
 
+import com.ruoyi.system.domain.GymTimeSlot;
+import com.ruoyi.system.service.IGymTimeSlotService;
+import org.springframework.ui.ModelMap;
+
+
 @Controller
 @RequestMapping("/gym/resource")
 public class GymResourceController extends BaseController {
@@ -49,5 +54,18 @@ public class GymResourceController extends BaseController {
         resource.setUpdateBy(username);
         resource.setUpdateTime(new Date());
         return toAjax(gymResourceService.updateGymResource(resource));
+    }
+
+    @Autowired
+    private IGymTimeSlotService gymTimeSlotService;
+
+    /**
+     * 根据资源 ID 展示对应时间段列表
+     */
+    @GetMapping("/slot/{resourceId}")
+    public String viewSlots(@PathVariable("resourceId") Long resourceId, ModelMap mmap) {
+        List<GymTimeSlot> slotList = gymTimeSlotService.selectSlotsByResourceId(resourceId);
+        mmap.put("slotList", slotList);
+        return "gym/slot"; // 注意：这是 slot.html 页面路径，默认在 templates/gym 下
     }
 }

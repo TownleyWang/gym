@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ruoyi.system.mapper.GymTimeSlotMapper">
+
+    <select id="selectSlotsByResourceId" resultType="com.ruoyi.system.domain.GymTimeSlot">
+        SELECT
+        slot_id           AS slotId,
+        resource_id       AS resourceId,
+        start_time        AS startTime,
+        end_time          AS endTime,
+        day_of_week       AS dayOfWeek,
+        max_bookings      AS maxBookings,
+        current_bookings  AS currentBookings,
+        status,
+        create_by         AS createBy,
+        create_time       AS createTime,
+        update_by         AS updateBy,
+        update_time       AS updateTime
+        FROM gym_time_slot
+        WHERE resource_id = #{resourceId}
+    </select>
+
+</mapper>
