@@ -47,6 +47,17 @@ btn.onclick = function () {
 };
 // ✅ 把按钮插入到 <p> 内部
 p.appendChild(btn);
+
+      // ✅ 查看时间段按钮
+  const viewBtn = document.createElement('button');
+  viewBtn.textContent = '查看时间段';
+  viewBtn.style.marginLeft = '10px';
+  viewBtn.className = 'btn btn-info btn-xs';
+  viewBtn.onclick = function () {
+    location.href = `/gym/resource/slot/${item.resourceId}`;
+  };
+  p.appendChild(viewBtn);
+
         container.appendChild(p);
       });
     });
