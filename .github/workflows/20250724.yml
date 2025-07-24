@@ -34,7 +34,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
         source: ruoyi-admin/target/ruoyi-admin.jar
-        target: /root/ruoyi-admin/
+        target: /root/ruoyi-admin/ruoyi-admin.jar
 
     - name: Run jar on server
       uses: appleboy/ssh-action@master
