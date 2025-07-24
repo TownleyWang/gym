@@ -37,5 +37,5 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           pkill -f 'ruoyi-admin.jar' || true
-          nohup java -jar -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m /root/ruoyi-admin/ruoyi-admin.jar > output.log 2>&1 &
-          disown
+          cd /root/ruoyi-admin/
+          setsid java -jar -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m ruoyi-admin.jar > output.log 2>&1 < /dev/null &
