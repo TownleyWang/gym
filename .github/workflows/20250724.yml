@@ -19,8 +19,7 @@ jobs:
 
     - name: Build with Maven
       run: |
-       cd ruoyi-admin
-       mvn clean package -DskipTests
+       mvn clean install -DskipTests
        
     - name: Deploy jar to server
       uses: appleboy/scp-action@master
