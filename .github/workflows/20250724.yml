@@ -38,4 +38,4 @@ jobs:
         script: |
           pkill -f 'ruoyi-admin.jar' || true
           nohup java -jar -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m /root/ruoyi-admin/ruoyi-admin.jar > output.log 2>&1 &
-          echo "Server started successfully"
+          disown
