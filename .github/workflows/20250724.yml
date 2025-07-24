@@ -33,7 +33,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
-        source: ruoyi-admin/target/ruoyi-admin.jar
+        source: ruoyi-admin/target/*.jar
         target: /root/ruoyi-admin/ruoyi-admin.jar
 
     - name: Run jar on server
