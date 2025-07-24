@@ -18,8 +18,10 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Maven
-      run: mvn clean package -DskipTests
-
+      run: |
+       cd ruoyi-admin
+       mvn clean package -DskipTests
+       
     - name: Deploy jar to server
       uses: appleboy/scp-action@master
       with:
