@@ -33,6 +33,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }} 
         script: rm -f /root/ruoyi-admin/ruoyi-admin.jar
 
     - name: Deploy jar to server
