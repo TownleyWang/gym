@@ -50,4 +50,4 @@ jobs:
           cd /root/ruoyi-admin/
           chmod +x start.sh
           nohup java -jar ruoyi-admin.jar > output.log 2>&1 &
-          disown
+          
