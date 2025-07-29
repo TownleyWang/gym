@@ -26,6 +26,7 @@ jobs:
     - name: Build project
       run: |
         mvn clean package -DskipTests
+        cd ruoyi-admin
         ls -lh target
     
     - name: Deploy jar to server
