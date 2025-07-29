@@ -23,9 +23,8 @@ jobs:
       run: |
         mvn clean install -DskipTests -U
     
-    - name: Build RuoYi Admin
+    - name: Build project
       run: |
-        cd ruoyi-admin
         mvn clean package -DskipTests
         ls -lh target
     
