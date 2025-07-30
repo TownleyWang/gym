@@ -27,8 +27,17 @@
                 <td th:text="${slot.currentBookings}"></td>
                 <td th:text="${slot.status}"></td>
                 <td>
-                    <button class="btn btn-primary btn-xs" th:attr="onclick=|bookSlot(${slot.slotId})|">预约</button>
-                    <button class="btn btn-danger btn-xs" th:attr="onclick=|cancelSlot(${slot.slotId})|">取消预约</button>
+                    <button class="btn btn-xs"
+                            th:class="${slot.currentBookings >= slot.maxBookings} ? 'btn btn-secondary disabled' : 'btn btn-primary'"
+                            th:attr="onclick=|bookSlot(${slot.slotId})|"
+                            th:disabled="${slot.currentBookings >= slot.maxBookings}">
+                        预约
+                    </button>
+
+                    <button class="btn btn-danger btn-xs"
+                            th:attr="onclick=|cancelSlot(${slot.slotId})|">
+                        取消预约
+                    </button>
                 </td>
             </tr>
             </tbody>
