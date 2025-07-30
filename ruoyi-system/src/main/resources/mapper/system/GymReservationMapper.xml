@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.GymReservationMapper">
+
+    <insert id="insertReservation" parameterType="GymReservation">
+        INSERT INTO gym_reservation (user_id, slot_id, resource_id, reservation_date, create_time, current_bookings)
+        VALUES (#{userId}, #{slotId}, #{resourceId}, #{reservationDate}, #{createTime}, #{currentBookings})
+    </insert>
+
+    <delete id="deleteByUserAndSlot">
+        DELETE FROM gym_reservation
+        WHERE user_id = #{userId} AND slot_id = #{slotId}
+    </delete>
+
+    <select id="countByUserAndSlot" resultType="int">
+        SELECT COUNT(*) FROM gym_reservation
+        WHERE user_id = #{userId} AND slot_id = #{slotId}
+    </select>
+
+    <select id="countSlotBookings" resultType="int">
+        SELECT COUNT(*) FROM gym_reservation
+        WHERE slot_id = #{slotId}
+    </select>
+
+    <update id="updateCurrentBookings">
+        UPDATE gym_reservation
+        SET current_bookings = #{total}
+        WHERE slot_id = #{slotId}
+    </update>
+
+    <select id="selectBySlotId" resultType="com.ruoyi.system.domain.GymReservation">
+        SELECT * FROM gym_reservation WHERE slot_id = #{slotId}
+    </select>
+
+</mapper>
