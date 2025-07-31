@@ -47,7 +47,7 @@
 <th:block th:include="include :: footer"/>
 <script>
     function bookSlot(slotId) {
-        $.post("/gym/resource/slot/book/" + slotId, function(res) {
+        $.post("/gym/resource/book/" + slotId, function(res) {
             if (res.code === 0) {
                 $.modal.msgSuccess("预约成功");
                 location.reload();
@@ -58,7 +58,7 @@
     }
 
     function cancelSlot(slotId) {
-        $.post("/gym/resource/slot/cancel/" + slotId, function(res) {
+        $.post("/gym/resource/cancel/" + slotId, function(res) {
             if (res.code === 0) {
                 $.modal.msgSuccess("取消成功");
                 location.reload();

@@ -3,6 +3,7 @@ package com.ruoyi.system.mapper;
 import com.ruoyi.system.domain.GymReservation;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface GymReservationMapper {
@@ -18,4 +19,6 @@ public interface GymReservationMapper {
     int updateCurrentBookings(@Param("slotId") Long slotId, @Param("total") int total);
 
     List<GymReservation> selectBySlotId(@Param("slotId") Long slotId); // 可用于显示详情等
+
+    int countBySlotAndDate(@Param("slotId") Long slotId, @Param("reservationDate") Date reservationDate);
 }

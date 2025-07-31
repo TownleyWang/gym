@@ -23,8 +23,6 @@
         WHERE resource_id = #{resourceId}
     </select>
 
-
-
 <update id="updateCurrentBookings" parameterType="com.ruoyi.system.domain.GymTimeSlot">
 UPDATE gym_time_slot
 SET
@@ -35,7 +33,7 @@ update_time = NOW()
 WHERE slot_id = #{slotId}
 </update>
 
-<select id="selectSlotById" parameterType="Long" resultType="com.ruoyi.system.domain.GymTimeSlot">
+<select id="selectGymTimeSlotById" parameterType="Long" resultType="com.ruoyi.system.domain.GymTimeSlot">
 SELECT
 slot_id AS slotId,
 resource_id AS resourceId,

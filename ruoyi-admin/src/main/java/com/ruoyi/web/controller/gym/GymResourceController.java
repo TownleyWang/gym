@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.gym;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.GymResource;
+import com.ruoyi.system.service.IGymReservationService;
 import com.ruoyi.system.service.IGymResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,8 +66,15 @@ public class GymResourceController extends BaseController {
     @GetMapping("/slot/{resourceId}")
     public String viewSlots(@PathVariable("resourceId") Long resourceId, ModelMap mmap) {
         List<GymTimeSlot> slotList = gymTimeSlotService.selectSlotsByResourceId(resourceId);
+
+        Date today = new Date(); // 只查今天的预约记录
+        for (GymTimeSlot slot : slotList) {
+            int count = gymReservationService.getCurrentBookings(slot.getSlotId(), today);
+            slot.setCurrentBookings(count); // 动态设置
+        }
+
         mmap.put("slotList", slotList);
-        return "gym/slot"; // 注意：这是 slot.html 页面路径，默认在 templates/gym 下
+        return "gym/slot";
     }
 
     @PostMapping("/slot/book/{id}")
@@ -81,6 +89,21 @@ public class GymResourceController extends BaseController {
     public AjaxResult cancelSlot(@PathVariable("id") Long slotId) {
         int result = gymTimeSlotService.cancelSlot(slotId, getUsername());
         return result > 0 ? AjaxResult.success() : AjaxResult.error("取消失败，可能未预约或参数错误");
+    }
+
+    @Autowired
+    private IGymReservationService gymReservationService;
+
+    @PostMapping("/book/{slotId}")
+    @ResponseBody
+    public AjaxResult book(@PathVariable("slotId") Long slotId) {
+        return gymReservationService.reserve(slotId);
+    }
+
+    @PostMapping("/cancel/{slotId}")
+    @ResponseBody
+    public AjaxResult cancel(@PathVariable("slotId") Long slotId) {
+        return gymReservationService.cancel(slotId);
     }
 
 }
