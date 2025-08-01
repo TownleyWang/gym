@@ -39,7 +39,6 @@
         SELECT COUNT(*) FROM gym_reservation
         WHERE slot_id = #{slotId}
         AND reservation_date = #{reservationDate}
-        AND status = 'CONFIRMED'
     </select>
 
 </mapper>

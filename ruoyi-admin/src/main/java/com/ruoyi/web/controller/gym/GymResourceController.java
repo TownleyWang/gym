@@ -66,6 +66,18 @@ public class GymResourceController extends BaseController {
     @GetMapping("/slot/{resourceId}")
     public String viewSlots(@PathVariable("resourceId") Long resourceId, ModelMap mmap) {
         List<GymTimeSlot> slotList = gymTimeSlotService.selectSlotsByResourceId(resourceId);
+        Date today = new Date(); // 只查当天的预约记录
+        for (GymTimeSlot slot : slotList) {
+            int count = gymReservationService.getCurrentBookings(slot.getSlotId(), today);
+            slot.setCurrentBookings(count); // 设置当前预约数
+
+            // ✅ 状态逻辑由我们自己判断（不再依赖数据库字段）
+            if (count >= slot.getMaxBookings()) {
+                slot.setStatus("FULL");
+            } else {
+                slot.setStatus("AVAILABLE");
+            }
+        }
         mmap.put("slotList", slotList);
         return "gym/slot";
     }
