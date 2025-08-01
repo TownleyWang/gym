@@ -12,6 +12,7 @@ import com.ruoyi.system.mapper.GymTimeSlotMapper;
 
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class GymReservationServiceImpl implements IGymReservationService {
@@ -50,6 +51,8 @@ public class GymReservationServiceImpl implements IGymReservationService {
         r.setUpdateTime(new Date());
         r.setStatus("ACTIVE"); // 可选字段，视表结构而定
         r.setCurrentBookings(1);  // 先设为 1（后面统一更新）
+        r.setReservationCode(UUID.randomUUID().toString().substring(0, 8));
+
 
         gymReservationMapper.insertReservation(r);
 
