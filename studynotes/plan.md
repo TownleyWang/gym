@@ -10,8 +10,8 @@
 
 | 日期       | 任务                     |  
 |------------|-----------------------------| 
-| 2025.7.30~ 2025.8.1      | [Git分支管理](https://git-scm.com/book/zh/v2/Git-分支-分支简介)<br> 通过AI加速研发，健身房功能二期迭代开发 <br> [华为云认证](https://edu.huaweicloud.com/signup/9990e06079984850979909a6a602d283?medium=share_kfzlb&invitation=0475f84b6a32481e823267ca59769c72)  |
-| 2025.7.29      | AI基础概念  |
+| 2025.7.30~ 2025.8.1      |  通过AI加速研发，健身房功能二期迭代开发 <br> [华为云认证](https://edu.huaweicloud.com/signup/9990e06079984850979909a6a602d283?medium=share_kfzlb&invitation=0475f84b6a32481e823267ca59769c72)  |
+| 2025.7.29      | [Git分支管理](https://git-scm.com/book/zh/v2/Git-分支-分支简介)  |
 | 2025.7.28      | [开发环境热加载](https://blog.csdn.net/qq_20173401/article/details/138375188)    |  
 
 ### 第三周 | 测试环境配置与部署，功能与流程测试 
