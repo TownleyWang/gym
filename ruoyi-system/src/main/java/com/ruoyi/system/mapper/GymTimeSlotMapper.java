@@ -10,4 +10,5 @@ public interface GymTimeSlotMapper {
     List<GymTimeSlot> selectSlotsByResourceId(Long resourceId);
     GymTimeSlot selectSlotById(Long slotId);
     GymTimeSlot selectGymTimeSlotById(@Param("slotId") Long slotId);
+    List<GymTimeSlot> selectSlotsByResourceIdWithBookings(Long resourceId);
 }

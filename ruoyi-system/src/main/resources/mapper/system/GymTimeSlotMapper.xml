@@ -49,4 +49,29 @@ FROM gym_time_slot
 WHERE slot_id = #{slotId}
 </select>
 
+    <select id="selectSlotsByResourceIdWithBookings" resultType="com.ruoyi.system.domain.GymTimeSlot">
+        SELECT
+        ts.slot_id AS slotId,
+        ts.resource_id AS resourceId,
+        ts.start_time AS startTime,
+        ts.end_time AS endTime,
+        ts.day_of_week AS dayOfWeek,
+        ts.max_bookings AS maxBookings,
+        ts.status,
+        ts.create_by AS createBy,
+        ts.create_time AS createTime,
+        ts.update_by AS updateBy,
+        ts.update_time AS updateTime,
+        IFNULL(r.count, 0) AS currentBookings
+        FROM gym_time_slot ts
+        LEFT JOIN (
+        SELECT slot_id, COUNT(*) AS count
+        FROM gym_reservation
+        WHERE reservation_date = CURRENT_DATE()
+        AND status = 'ACTIVE'
+        GROUP BY slot_id
+        ) r ON ts.slot_id = r.slot_id
+        WHERE ts.resource_id = #{resourceId}
+    </select>
+
 </mapper>
