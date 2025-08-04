@@ -38,6 +38,14 @@
                             th:attr="onclick=|cancelSlot(${slot.slotId})|">
                         取消预约
                     </button>
+
+                    <!-- 当前预约数大于0才显示按钮 -->
+                    <a class="btn btn-info btn-xs"
+                       th:if="${slot.currentBookings > 0}"
+                       th:href="@{/gym/resource/slot/detail/{id}(id=${slot.slotId})}">
+                       预约详情
+                    </a>
+
                 </td>
             </tr>
             </tbody>

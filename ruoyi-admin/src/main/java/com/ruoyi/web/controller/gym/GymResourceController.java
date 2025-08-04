@@ -109,4 +109,15 @@ public class GymResourceController extends BaseController {
         return gymReservationService.cancel(slotId);
     }
 
+    @GetMapping("/slot/detail/{slotId}")
+    public String viewSlotDetail(@PathVariable("slotId") Long slotId, ModelMap mmap) {
+        GymTimeSlot slot = gymTimeSlotService.selectById(slotId);
+        GymResource resource = gymResourceService.selectGymResourceById(slot.getResourceId());
+
+        mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
+        mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00
+        return "gym/slotDetail";
+    }
+
+
 }

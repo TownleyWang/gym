@@ -74,4 +74,10 @@ public class GymTimeSlotServiceImpl implements IGymTimeSlotService {
         return gymTimeSlotMapper.selectSlotsByResourceIdWithBookings(resourceId);
     }
 
+    @Override
+    public GymTimeSlot selectById(Long slotId) {
+        return gymTimeSlotMapper.selectGymTimeSlotById(slotId);
+    }
+
+
 }
