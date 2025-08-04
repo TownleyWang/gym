@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.gym;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.GymResource;
+import com.ruoyi.system.service.AIService;
 import com.ruoyi.system.service.IGymReservationService;
 import com.ruoyi.system.service.IGymResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class GymResourceController extends BaseController {
 
     @Autowired
     private IGymResourceService gymResourceService;
+
+    @Autowired
+    private AIService aiService;
+
 
     /**
      * 返回页面路径
@@ -114,8 +119,15 @@ public class GymResourceController extends BaseController {
         GymTimeSlot slot = gymTimeSlotService.selectById(slotId);
         GymResource resource = gymResourceService.selectGymResourceById(slot.getResourceId());
 
+        String resourceName = resource.getResourceName();
+        String timeRange = slot.getStartTime() + " - " + slot.getEndTime();
+        String suggestion = aiService.getAISuggestion(resourceName, timeRange);
+
+
         mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
         mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00
+        mmap.put("aiSuggestion", suggestion);
+
         return "gym/slotDetail";
     }
 
