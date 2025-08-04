@@ -8,7 +8,7 @@ import java.util.*;
 
 @Service
 public class AIService {
-
+    // TODO :jjjjj
     private static final String API_URL = "https://api.siliconflow.cn/v1/chat/completions";
     private static final String API_KEY = "sk-kdcgdkgkyqgypllksfxhthgrgnoarvzjexpkkqzoejiyqdwb"; // ✅ 请替换成你的真实密钥
 

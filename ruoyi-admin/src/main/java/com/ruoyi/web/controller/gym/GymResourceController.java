@@ -120,9 +120,11 @@ public class GymResourceController extends BaseController {
         GymResource resource = gymResourceService.selectGymResourceById(slot.getResourceId());
 
         String resourceName = resource.getResourceName();
+        // todo : 计算时间差, 切面方式
+        System.out.println("");
         String timeRange = slot.getStartTime() + " - " + slot.getEndTime();
         String suggestion = aiService.getAISuggestion(resourceName, timeRange);
-
+        System.out.println("");
 
         mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
         mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00
