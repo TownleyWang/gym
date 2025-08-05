@@ -6,11 +6,18 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 @Service
 public class AIService {
     // TODO :jjjjj
-    private static final String API_URL = "https://api.siliconflow.cn/v1/chat/completions";
-    private static final String API_KEY = "sk-kdcgdkgkyqgypllksfxhthgrgnoarvzjexpkkqzoejiyqdwb"; // ✅ 请替换成你的真实密钥
+
+    @Value("${app.ai.url}")
+    private String API_URL;
+
+    @Value("${app.ai.key}")
+    private String API_KEY;
 
     public String getAISuggestion(String resourceName, String timeRange) {
         RestTemplate restTemplate = new RestTemplate();
