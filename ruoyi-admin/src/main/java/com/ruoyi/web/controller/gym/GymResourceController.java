@@ -19,6 +19,9 @@ import com.ruoyi.system.domain.GymTimeSlot;
 import com.ruoyi.system.service.IGymTimeSlotService;
 import org.springframework.ui.ModelMap;
 
+import org.springframework.util.StopWatch;
+
+
 
 @Controller
 @RequestMapping("/gym/resource")
@@ -121,10 +124,17 @@ public class GymResourceController extends BaseController {
 
         String resourceName = resource.getResourceName();
         // todo : 计算时间差, 切面方式
-        System.out.println("");
         String timeRange = slot.getStartTime() + " - " + slot.getEndTime();
+
+        // 启动计时器
+        StopWatch watch = new StopWatch();
+        watch.start("AI调用");
+
         String suggestion = aiService.getAISuggestion(resourceName, timeRange);
-        System.out.println("");
+
+        // 停止计时器
+        watch.stop();
+        System.out.println(watch.prettyPrint());
 
         mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
         mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AIService {
-    // TODO :jjjjj
+    // TODO :列出todo
 
     @Value("${app.ai.url}")
     private String API_URL;
