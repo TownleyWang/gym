@@ -36,6 +36,7 @@ public class AIService {
         body.put("model", "deepseek-ai/DeepSeek-R1");
         body.put("messages", Collections.singletonList(message));
         body.put("temperature", 0.7);
+        body.put("max_tokens", 100);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
