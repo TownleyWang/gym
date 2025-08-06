@@ -83,4 +83,9 @@ public class GymReservationServiceImpl implements IGymReservationService {
         return gymReservationMapper.countBySlotAndDate(slotId, reservationDate);
     }
 
+    @Override
+    public GymReservation selectBySlotIdAndUser(Long slotId, String username) {
+        return gymReservationMapper.selectBySlotIdAndUsername(slotId, username);
+    }
+
 }

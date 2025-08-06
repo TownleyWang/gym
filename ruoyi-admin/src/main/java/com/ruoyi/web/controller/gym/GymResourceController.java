@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.gym;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.system.domain.GymReservation;
 import com.ruoyi.system.domain.GymResource;
 import com.ruoyi.system.service.AIService;
 import com.ruoyi.system.service.IGymReservationService;
@@ -135,6 +136,9 @@ public class GymResourceController extends BaseController {
         // 停止计时器
         watch.stop();
         System.out.println("AI建议耗时：" + (watch.getTotalTimeMillis() / 1000.0 / 60.0) + " 分钟");
+
+        GymReservation reservation = gymReservationService.selectBySlotIdAndUser(slotId, getUsername());
+        mmap.put("reservationCode", reservation.getReservationCode());
 
         mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
         mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00

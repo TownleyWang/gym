@@ -21,4 +21,7 @@ public interface GymReservationMapper {
     List<GymReservation> selectBySlotId(@Param("slotId") Long slotId); // 可用于显示详情等
 
     int countBySlotAndDate(@Param("slotId") Long slotId, @Param("reservationDate") Date reservationDate);
+
+    GymReservation selectBySlotIdAndUsername(@Param("slotId") Long slotId, @Param("username") String username);
+
 }

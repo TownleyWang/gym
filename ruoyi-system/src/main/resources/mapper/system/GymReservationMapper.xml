@@ -41,4 +41,13 @@
         AND reservation_date = #{reservationDate}
     </select>
 
+    <select id="selectBySlotIdAndUsername" resultType="com.ruoyi.system.domain.GymReservation">
+        SELECT r.*
+        FROM gym_reservation r
+        LEFT JOIN sys_user u ON r.user_id = u.user_id
+        WHERE r.slot_id = #{slotId}
+        AND u.user_name = #{username}
+        LIMIT 1
+    </select>
+
 </mapper>
