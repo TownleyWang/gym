@@ -19,6 +19,16 @@ public class AIService {
     @Value("${app.ai.key}")
     private String API_KEY;
 
+    // 时间转换（加这段函数）
+    public String convertTimeRangeToChinese(String timeRange) {
+        if ("00:08:00 - 00:10:00".equals(timeRange)) {
+            return "上午八点到十点";
+        } else if ("00:10:00 - 00:12:00".equals(timeRange)) {
+            return "上午十点到十二点";
+        }
+        return timeRange;
+    }
+
     public String getAISuggestion(String resourceName, String timeRange) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -30,13 +40,15 @@ public class AIService {
         // 请求体
         Map<String, Object> message = new HashMap<>();
         message.put("role", "user");
-        message.put("content", "我预约了 " + resourceName + "，时间是 " + timeRange + "，请为我提供健身训练建议。");
+        // 主方法中：
+        String chineseTime = convertTimeRangeToChinese(timeRange);
+        message.put("content", "我预约了 " + resourceName + "，时间是 " + chineseTime + "，请用100字以内提供健身训练建议。");
+
 
         Map<String, Object> body = new HashMap<>();
         body.put("model", "deepseek-ai/DeepSeek-R1");
         body.put("messages", Collections.singletonList(message));
         body.put("temperature", 0.7);
-        body.put("max_tokens", 100);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
