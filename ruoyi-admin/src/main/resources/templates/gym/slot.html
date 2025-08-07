@@ -27,8 +27,25 @@
                 <td th:text="${slot.currentBookings}"></td>
                 <td th:text="${slot.status}"></td>
                 <td>
-                    <button class="btn btn-primary btn-xs" th:attr="onclick=|bookSlot(${slot.slotId})|">预约</button>
-                    <button class="btn btn-danger btn-xs" th:attr="onclick=|cancelSlot(${slot.slotId})|">取消预约</button>
+                    <button class="btn btn-xs"
+                            th:class="${slot.currentBookings >= slot.maxBookings} ? 'btn btn-secondary disabled' : 'btn btn-primary'"
+                            th:attr="onclick=|bookSlot(${slot.slotId})|"
+                            th:disabled="${slot.currentBookings >= slot.maxBookings}">
+                        预约
+                    </button>
+
+                    <button class="btn btn-danger btn-xs"
+                            th:attr="onclick=|cancelSlot(${slot.slotId})|">
+                        取消预约
+                    </button>
+
+                    <!-- 当前预约数大于0才显示按钮 -->
+                    <a class="btn btn-info btn-xs"
+                       th:if="${slot.currentBookings > 0}"
+                       th:href="@{/gym/resource/slot/detail/{id}(id=${slot.slotId})}">
+                       预约详情
+                    </a>
+
                 </td>
             </tr>
             </tbody>
@@ -38,7 +55,7 @@
 <th:block th:include="include :: footer"/>
 <script>
     function bookSlot(slotId) {
-        $.post("/gym/resource/slot/book/" + slotId, function(res) {
+        $.post("/gym/resource/book/" + slotId, function(res) {
             if (res.code === 0) {
                 $.modal.msgSuccess("预约成功");
                 location.reload();
@@ -49,7 +66,7 @@
     }
 
     function cancelSlot(slotId) {
-        $.post("/gym/resource/slot/cancel/" + slotId, function(res) {
+        $.post("/gym/resource/cancel/" + slotId, function(res) {
             if (res.code === 0) {
                 $.modal.msgSuccess("取消成功");
                 location.reload();

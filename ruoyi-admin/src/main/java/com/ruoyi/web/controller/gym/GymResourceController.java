@@ -2,7 +2,10 @@ package com.ruoyi.web.controller.gym;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.system.domain.GymReservation;
 import com.ruoyi.system.domain.GymResource;
+import com.ruoyi.system.service.AIService;
+import com.ruoyi.system.service.IGymReservationService;
 import com.ruoyi.system.service.IGymResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,9 @@ import com.ruoyi.system.domain.GymTimeSlot;
 import com.ruoyi.system.service.IGymTimeSlotService;
 import org.springframework.ui.ModelMap;
 
+import org.springframework.util.StopWatch;
+
+
 
 @Controller
 @RequestMapping("/gym/resource")
@@ -24,6 +30,10 @@ public class GymResourceController extends BaseController {
 
     @Autowired
     private IGymResourceService gymResourceService;
+
+    @Autowired
+    private AIService aiService;
+
 
     /**
      * 返回页面路径
@@ -64,10 +74,20 @@ public class GymResourceController extends BaseController {
      */
     @GetMapping("/slot/{resourceId}")
     public String viewSlots(@PathVariable("resourceId") Long resourceId, ModelMap mmap) {
-        List<GymTimeSlot> slotList = gymTimeSlotService.selectSlotsByResourceId(resourceId);
+        List<GymTimeSlot> slotList = gymTimeSlotService.selectSlotsByResourceIdWithBookings(resourceId);
+
+        for (GymTimeSlot slot : slotList) {
+            if (slot.getCurrentBookings() >= slot.getMaxBookings()) {
+                slot.setStatus("FULL");
+            } else {
+                slot.setStatus("AVAILABLE");
+            }
+        }
+
         mmap.put("slotList", slotList);
-        return "gym/slot"; // 注意：这是 slot.html 页面路径，默认在 templates/gym 下
+        return "gym/slot";
     }
+
 
     @PostMapping("/slot/book/{id}")
     @ResponseBody
@@ -82,5 +102,50 @@ public class GymResourceController extends BaseController {
         int result = gymTimeSlotService.cancelSlot(slotId, getUsername());
         return result > 0 ? AjaxResult.success() : AjaxResult.error("取消失败，可能未预约或参数错误");
     }
+
+    @Autowired
+    private IGymReservationService gymReservationService;
+
+    @PostMapping("/book/{slotId}")
+    @ResponseBody
+    public AjaxResult book(@PathVariable("slotId") Long slotId) {
+        return gymReservationService.reserve(slotId);
+    }
+
+    @PostMapping("/cancel/{slotId}")
+    @ResponseBody
+    public AjaxResult cancel(@PathVariable("slotId") Long slotId) {
+        return gymReservationService.cancel(slotId);
+    }
+
+    @GetMapping("/slot/detail/{slotId}")
+    public String viewSlotDetail(@PathVariable("slotId") Long slotId, ModelMap mmap) {
+        GymTimeSlot slot = gymTimeSlotService.selectById(slotId);
+        GymResource resource = gymResourceService.selectGymResourceById(slot.getResourceId());
+
+        String resourceName = resource.getResourceName();
+        // todo : 计算时间差, 切面方式
+        String timeRange = slot.getStartTime() + " - " + slot.getEndTime();
+
+        // 启动计时器
+        StopWatch watch = new StopWatch();
+        watch.start("AI调用");
+
+        String suggestion = aiService.getAISuggestion(resourceName, timeRange);
+
+        // 停止计时器
+        watch.stop();
+        System.out.println("AI建议耗时：" + (watch.getTotalTimeMillis() / 1000.0 / 60.0) + " 分钟");
+
+        GymReservation reservation = gymReservationService.selectBySlotIdAndUser(slotId, getUsername());
+        mmap.put("reservationCode", reservation.getReservationCode());
+
+        mmap.put("resourceName", resource.getResourceName()); // 项目名，如“篮球”
+        mmap.put("slotTime", slot.getStartTime() + " - " + slot.getEndTime()); // 时间段，如 08:00–10:00
+        mmap.put("aiSuggestion", suggestion);
+
+        return "gym/slotDetail";
+    }
+
 
 }

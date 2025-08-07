@@ -16,6 +16,8 @@ public class GymReservation implements Serializable {
     private String notes;
     private Date createTime;
     private Date updateTime;
+    private Integer currentBookings;
+
 
     public Long getReservationId() {
         return reservationId;
@@ -95,5 +97,13 @@ public class GymReservation implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getCurrentBookings() {
+        return currentBookings;
+    }
+
+    public void setCurrentBookings(Integer currentBookings) {
+        this.currentBookings = currentBookings;
     }
 }
